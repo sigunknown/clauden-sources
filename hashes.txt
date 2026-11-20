@@ -1,0 +1,71 @@
+# SHA-256 of collected files (20.11.2026)
+4226efe817d88967145d2a78f98d2409844a36c66ca236c605e8fa6401ea8198 *./app/assets/icon.icns
+1c42810bd251d85dc92ced79697a747a33d72db8612d4c11fea07518b83bc8b8 *./app/assets/icon.ico
+bd8405a53e2a635db0d9edd87e16a48d2f27e5de38898b0d81f9a4e782847ae2 *./app/assets/icon.png
+0811774b0d8bb6a4b0a4f998f5105a3548888b83d38102c4698c38d235e152fc *./app/node_modules-versions.txt
+6b6655f89696bc63b2983d1b9ed3255f10f2c999be00863382f4a346873bff32 *./app/package.json
+bbdaaf1b9d0ea6c4f6b850ed491934d4b9d108845caa544408299f584243a66f *./app/src/browser.html
+65fdbd376fbc3011f89ac864527b1eda09d4a279021b23f803b75dc9f0e0ee41 *./app/src/main/claude-client.js
+3b4757158c7235f8dddf620355deab29e9eae555713356e46913946d8198d4b3 *./app/src/main/claude-desktop.js
+8deb9aab3ad6a90c1c3a94c941ced761dafe7ce1e5f7778149f08c01af8ef3e9 *./app/src/main/claude-mock.js
+fbaf3849cf7ef364338d05a1ea12652e1f00b83d371e67ee36971bbd59e36b87 *./app/src/main/claude-session.js
+652027a6aa8bd09b0f9668cf151f36e9a450a65d5827019f58466c05dcda5641 *./app/src/main/custom-api.js
+0418cd90d57717eae5033bd34267404fd50d58d048bfab981115345e9a771054 *./app/src/main/ipc.js
+ed75314da8338469f3a12990b5b115c05dc092215711e34211cac4e9621adc0b *./app/src/main/logger.js
+42751b0d911260443c3048e31f458063c381aa2de9af7a4d132d1dcfbbbf03a4 *./app/src/main/main.js
+d4934b60c2d52bd906aaa6477325bc24fdd801664ccc82d587e75edc7741acbe *./app/src/main/node-parser.js
+eb043e8a68696156c206054899f3d427dddaf609f8a4735060aa2f38c84bcbf8 *./app/src/main/offline.html
+d033e4b526b89fd03119ff34f52d6e737364088911d9d056f3200d304e1467f9 *./app/src/main/preload.js
+6122a7b564476502e9ff5b3d30a1d69d6751e3423d3d3a2c2fd715b93d87cb57 *./app/src/main/proxy.js
+a26ac0727a1cc412d38f38ad06039ae1ca2091969924a71e5e3a14c5080720df *./app/src/main/runtime-window.js
+1c4bca05e4c684fe92afdd73e47439e2cc50849a8eb2b03a2a1d1526a969df87 *./app/src/main/updater.js
+dc0d2c2b89f8283db7027536d15db5ce261e7e484ed81d8c4a2ca7e2520b161b *./screenshots/01-home-live.jpg
+cebe03a46e140888951e2c362c38dddc123db98796cba655e64a17af48c17667 *./screenshots/01-home-local.jpg
+6ee20195dfab0b39018a00073ed641b401d263dce3b9ec23ad5f65873be0bd19 *./screenshots/02-pricing-live.jpg
+6ee20195dfab0b39018a00073ed641b401d263dce3b9ec23ad5f65873be0bd19 *./screenshots/02-pricing-local.jpg
+7f92ce3a9710d496414b9bcae7688231fa4bc614a835eb1c35b0802cd9cae2e1 *./screenshots/03-docs-live.jpg
+7f92ce3a9710d496414b9bcae7688231fa4bc614a835eb1c35b0802cd9cae2e1 *./screenshots/03-docs-local.jpg
+152e0b6c6389606ff3d0b660f537a93460ccd9d73d0ca3e94ef92c9c89420740 *./serve.py
+4f5346e9be9315b613b21bf7026253f088d1aa38511f2fc119dac17519d3a0eb *./server/latest.yml
+9bbe0c5c327ea0f5a8f9895caa97aa8dca6e8cfdaf30895f1f2ab577ad54d3ed *./server/proxy-nodes.json
+2bd0062cc85bb8ae1f48a2e997c3e73c29cc217e57a88977cd10836fd9ee2846 *./server/rdap-188.40.190.90.json
+dba3f343bf053aa67aa7a2a0972e62f102aa2bb93d727126f7cb5e9f83c87743 *./site/assets/logo.svg
+7a1f681e926af9c0051efdae2a83d4460ea888e18c64a8a46d3b8785af17072f *./site/assets/mascot.svg
+8ff725b8a51195ec095606ee61fa18ca48e24fb6dd2b22d8ee1789be84a992b4 *./site/chat.html
+5094e9535c4ec732baa9d1435ddc4a0487a9b45d443a715e51b1a36463a4057d *./site/css/app.css
+84319059f0b110f967c7735eeea108221a98791b3d3e9857be5c5f6dd75c11a2 *./site/css/docs.css
+38f4f2893b32175d9d50eb8a05416da2d416b4a07604079715fd81fe4c3b029e *./site/css/landing.css
+a80b1f5c6619e9618d5eaa71518a668605c02b3795679bd13f4c83fd42745a6f *./site/css/legal.css
+b3fd5a9d62eae74927d4ced83218dda7f4721c856584d5d87f196300101d7b92 *./site/css/status.css
+414ed093370eb4b314c0b499b8cfa3409e5b919c0c0893c0527e3cfcb73ea1c9 *./site/docs.html
+4eda2c42031a090a3d01cd58ada3de00f467e3e359efad36572f26e43ecba65f *./site/fonts/anthropic_sans.ttf
+ad5af382e340115276eb38e1230844d2705773acf2fec61738fa43500e30d515 *./site/fonts/anthropic_sans_italic.ttf
+cb2c65e0d0d326181f2a2525ad344cacc850a41c24aeaea51cc70df8c88a3231 *./site/fonts/anthropic_serif.ttf
+1682880b4495f1e2fa5c40d5274f48e076562b3bfb14f8f80830a0ddb912daae *./site/fonts/anthropic_serif_italic.ttf
+662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016 *./site/fonts/jetbrains_mono.ttf
+e62d5c8ac9daf97e90b00d0de98822d6c31e86947aa645ff11505b580fdcc982 *./site/icons/apple-touch-icon.png
+31bf1d0cd8487c39540a94270726a1ee71cde9da30bc4fc3e41614de35f5f7ee *./site/icons/favicon-32.png
+0640eb15b064539275c170d9471f1b2d371d3dd54f5145dac2f7c3db5ac9d0f2 *./site/icons/icon-192.png
+bd8405a53e2a635db0d9edd87e16a48d2f27e5de38898b0d81f9a4e782847ae2 *./site/icons/icon-512.png
+8ff725b8a51195ec095606ee61fa18ca48e24fb6dd2b22d8ee1789be84a992b4 *./site/index.html
+ccba7c558db19374173b60f75494a0e93788faba06fb46499f3938e790019c4f *./site/js/app.bundle.js
+466d0a460a445fe51a6e16a391c180acaf1660356bab391dafcc667ad732febd *./site/js/app.bundle.unescaped.js
+238e9abaea7f21d2adbf2fcf20298df9139328f49cbcbf7de8a0283d1e0933d1 *./site/manifest.webmanifest
+e8cbc87605069af15b1d11c433b3e6aa14252c075f1284ee1f45d842bbc6b038 *./site/mirror-log.tsv
+d4b1ad1a8e38d6217185b4b0fe57dea454e01d34279b4e96247bded575427131 *./site/offer.html
+7590e34ea7238bff5801e22c52ac4b2e625ad826960c7e4171459ac99261670d *./site/pricing.html
+b497b3890c0711dc54f837e2803186dc71be7d68d004868e66bf4fa7dc773f9e *./site/privacy.html
+38114371927031235808ac1017d8a689c852939cf8bcaf20f2f39aff3f11f1e6 *./site/robots.txt
+f449006b901a9061779f9931340da924e91c93acfc9ac49586c11e337eada6ed *./site/sitemap.xml
+08fc526cf804bf5b6f969843cae4b3db6c8af93fe36e86fe4d290939893d4f76 *./site/status.html
+0798c94cdf9622439985e91a49ff6a5264e2df62a019d87dfed0d4477a218437 *./site/sw.js
+d4b1ad1a8e38d6217185b4b0fe57dea454e01d34279b4e96247bded575427131 *./site/terms.html
+c4a399dd6f488bc97a3546e3476747b3e714c99c57b9473154c6fb8d259b9381 *./site/vendor/highlight.min.js
+934e3e36e9e2da0afb1a6e75075bb0f09af05293a844e84a7477ef40911c349a *./site/vendor/marked.min.js
+8eb41b658831fab175fad9bcd00fcb2d84e0ed3a25a55053d4ecd4444b8b43a0 *./site/vendor/purify.min.js
+
+# Original files (not copied)
+f592fdfedc4a564cd600e9c9098f3f9286fae4964f5ad3a55b52fc9b5369fea9  resources/app.asar (Clauden 0.2.9, installed copy)
+fd19752d264f033f4a5f274e30c355b956f8e27cca77f28501ea22dcf18a5d15 *Clauden-latest.exe
+installer sha512 (base64, matches server/latest.yml): DJNm96Q/bqVh0O/aaR1Rb+OM3WfgkXPXTvoOznNv2gAQkP4zkUbcI7WICWz37FxnfpZzRiyClykWJTj9B5yRBg==
+6d485fab213acf33c3d50173ab30aa6a1d119a825d4ad161c73342459a2306d5  app/latest.apk from clauden.best (downloaded by mistake, deleted, not included)

@@ -1,0 +1,25 @@
+{
+  "name": "Clauden",
+  "short_name": "Clauden",
+  "description": "Clauden — полный интерфейс Claude: чаты, проекты, артефакты, Code и защита от бана.",
+  "id": "/",
+  "start_url": "/chat",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "orientation": "any",
+  "background_color": "#191919",
+  "theme_color": "#191919",
+  "lang": "ru",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    { "src": "/icons/icon-192.png?v=9", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png?v=9", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png?v=9", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Новый чат", "url": "/chat" },
+    { "name": "Проекты", "url": "/projects" },
+    { "name": "Code", "url": "/code" }
+  ]
+}

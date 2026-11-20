@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#191919">
+  <meta name="description" content="Clauden — Claude в браузере и приложении: полный интерфейс, модели Anthropic и перенос данных из официального аккаунта.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Clauden">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Clauden">
+  <meta property="og:url" content="https://clauden.best/">
+  <meta property="og:title" content="Clauden — Claude в браузере и приложении">
+  <meta property="og:description" content="Полный интерфейс, модели Anthropic и перенос данных из официального Claude. Если аккаунт забанят, доступ и оплаченный лимит останутся.">
+  <meta property="og:image" content="https://clauden.best/icons/icon-512.png?v=9">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Clauden — Claude в браузере и приложении">
+  <meta name="twitter:description" content="Полный интерфейс, модели Anthropic и перенос данных из официального Claude.">
+  <meta name="twitter:image" content="https://clauden.best/icons/icon-512.png?v=9">
+  <title>Clauden — Claude в браузере и приложении</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icons/favicon-32.png?v=9" sizes="32x32">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png?v=9">
+  <link rel="preload" href="/fonts/anthropic_serif.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="/fonts/anthropic_sans.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="/css/app.css?v=20261119-180905">
+  <link rel="stylesheet" href="/css/landing.css?v=20261119-180905">
+</head>
+<body>
+  <div id="boot" class="boot">
+    <img src="/assets/logo.svg?v=9" alt="" class="boot-logo">
+    <div class="boot-name">Clauden</div>
+    <div class="boot-spinner"></div>
+  </div>
+  <div id="app" class="app" hidden></div>
+  <div id="modal-root"></div>
+  <div id="toast-root" class="toast-root"></div>
+
+  <script src="/vendor/marked.min.js"></script>
+  <script src="/vendor/purify.min.js"></script>
+  <script src="/vendor/highlight.min.js"></script>
+  <noscript>
+    <footer style="padding:24px;text-align:center;color:#9a9a9a;font:14px/1.6 system-ui,sans-serif">
+      Clauden · Самозанятый Зайцев Станислав Алексеевич, ИНН 362201956766, г. Воронеж ·
+      <a href="/pricing" style="color:#d97757">Тарифы</a> ·
+      <a href="/terms" style="color:#d97757">Условия</a> ·
+      <a href="/privacy" style="color:#d97757">Приватность</a> ·
+      <a href="/pricing#refund" style="color:#d97757">Оплата и возврат</a> ·
+      <a href="/status" style="color:#d97757">Статус</a> ·
+      <a href="https://t.me/GwardenSup" style="color:#d97757">Поддержка в Telegram</a>
+    </footer>
+  </noscript>
+  <script type="module" src="/js/app.bundle.js?v=20261119-180905"></script>
+</body>
+</html>

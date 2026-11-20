@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#191919">
+  <meta name="robots" content="index,follow">
+  <title>Статус сервисов — Clauden</title>
+  <meta name="description" content="Состояние сервисов Clauden в реальном времени: веб-интерфейс, API-шлюз и тарифы.">
+  <link rel="icon" href="/icons/favicon-32.png?v=9" sizes="32x32">
+  <link rel="stylesheet" href="/css/legal.css">
+  <link rel="stylesheet" href="/css/status.css">
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap site-head-row">
+    <a class="brand" href="/"><img src="/assets/logo.svg?v=9" alt="">Clauden</a>
+    <nav class="head-nav" aria-label="Документы">
+      <a href="/pricing">Тарифы</a>
+      <a href="/docs">API</a>
+      <a href="/offer">Оферта</a>
+      <a href="/privacy">Приватность</a>
+      <a href="/status" aria-current="page">Статус</a>
+      <a href="https://t.me/GwardenSup" target="_blank" rel="noopener">Поддержка</a>
+      <a class="head-cta" href="/chat">Открыть Clauden</a>
+    </nav>
+  </div>
+</header>
+
+<main class="status-main">
+  <div class="wrap">
+    <a class="back-link" href="/">← На главную</a>
+    <div class="status-head">
+      <span class="doc-kicker">Clauden Status</span>
+      <h1 class="status-title">Статус сервисов</h1>
+      <p class="status-lead">Проверяем основные сервисы каждые 30 секунд. Если что-то не работает, напишите в поддержку — мы увидим инцидент и ответим.</p>
+    </div>
+
+    <div id="status-summary" class="status-summary" aria-live="polite">
+      <span class="status-dot" aria-hidden="true"></span>
+      <div class="status-summary-text">
+        <div class="status-summary-title" id="status-summary-title">Проверяем сервисы…</div>
+        <div class="status-summary-hint" id="status-summary-hint">Это займёт несколько секунд.</div>
+      </div>
+    </div>
+
+    <div class="status-list" aria-label="Компоненты сервиса">
+      <div class="status-row">
+        <div>
+          <div class="status-name">Веб-сайт</div>
+          <div class="status-desc">clauden.best и веб-интерфейс</div>
+        </div>
+        <span class="status-pill ok" id="pill-web">Работает</span>
+        <span class="status-latency" id="latency-web">—</span>
+      </div>
+      <div class="status-row">
+        <div>
+          <div class="status-name">API Clauden</div>
+          <div class="status-desc">Чаты, Code и запросы к моделям</div>
+        </div>
+        <span class="status-pill" id="pill-api">Проверяем…</span>
+        <span class="status-latency" id="latency-api">—</span>
+      </div>
+      <div class="status-row">
+        <div>
+          <div class="status-name">Тарифы и цены</div>
+          <div class="status-desc">Публичный список тарифов и цены</div>
+        </div>
+        <span class="status-pill" id="pill-plans">Проверяем…</span>
+        <span class="status-latency" id="latency-plans">—</span>
+      </div>
+    </div>
+
+    <p class="status-meta" id="status-meta">Последняя проверка: —</p>
+
+    <div class="status-note">
+      Не нашли проблему на странице? Напишите в <a href="https://t.me/GwardenSup" target="_blank" rel="noopener">Telegram @GwardenSup</a> — приложите время, устройство и текст ошибки.
+    </div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap site-foot-row site-foot-requisites">
+    <div>
+      <strong>Самозанятый Зайцев Станислав Алексеевич</strong><br>
+      ИНН 362201956766 · г. Воронеж
+    </div>
+    <div>
+      <a href="mailto:gwardensup@gmail.com">gwardensup@gmail.com</a> ·
+      Telegram: <a href="https://t.me/GwardenSup" target="_blank" rel="noopener">@GwardenSup</a>
+    </div>
+  </div>
+  <div class="wrap site-foot-row">
+    <div>© 2026 Clauden. Claude — товарный знак Anthropic PBC; Clauden не связан с Anthropic.</div>
+    <div class="site-foot-links">
+      <a href="/pricing">Тарифы</a>
+      <a href="/offer">Оферта</a>
+      <a href="/privacy">Приватность</a>
+      <a href="/pricing#refund">Оплата и возврат</a>
+      <a href="/status">Статус</a>
+      <a href="https://t.me/GwardenSup" target="_blank" rel="noopener">Поддержка</a>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function () {
+  var summary = document.getElementById("status-summary");
+  var summaryTitle = document.getElementById("status-summary-title");
+  var summaryHint = document.getElementById("status-summary-hint");
+  var meta = document.getElementById("status-meta");
+  var checks = [
+    { id: "api", url: "/health", timeout: 12000 },
+    { id: "plans", url: "/v1/plans", timeout: 12000, validate: function (data) { return Boolean(data && Array.isArray(data.data)); } }
+  ];
+  var last = { api: null, plans: null };
+
+  function setPill(id, state, text) {
+    var pill = document.getElementById("pill-" + id);
+    if (!pill) return;
+    pill.className = "status-pill" + (state ? " " + state : "");
+    pill.textContent = text;
+  }
+
+  function setLatency(id, ms) {
+    var node = document.getElementById("latency-" + id);
+    if (node) node.textContent = ms == null ? "—" : ms + " мс";
+  }
+
+  async function check(component) {
+    var started = performance.now();
+    var controller = new AbortController();
+    var timer = setTimeout(function () { controller.abort(); }, component.timeout);
+    try {
+      var response = await fetch(component.url + "?t=" + Date.now(), {
+        cache: "no-store",
+        signal: controller.signal,
+        headers: { accept: "application/json" }
+      });
+      var data = null;
+      try { data = await response.json(); } catch (e) { data = null; }
+      var ok = response.ok && (component.validate ? component.validate(data) : true);
+      last[component.id] = { ok: ok, ms: Math.round(performance.now() - started) };
+    } catch (error) {
+      last[component.id] = { ok: false, ms: Math.round(performance.now() - started) };
+    } finally {
+      clearTimeout(timer);
+    }
+    var result = last[component.id];
+    setPill(component.id, result.ok ? "ok" : "bad", result.ok ? "Работает" : "Недоступен");
+    setLatency(component.id, result.ms);
+  }
+
+  async function run() {
+    await Promise.all(checks.map(check));
+    var api = last.api && last.api.ok;
+    var plans = last.plans && last.plans.ok;
+    summary.className = "status-summary " + (api && plans ? "ok" : api || plans ? "warn" : "bad");
+    if (api && plans) {
+      summaryTitle.textContent = "Все системы работают";
+      summaryHint.textContent = "API и тарифы отвечают нормально.";
+    } else if (api || plans) {
+      summaryTitle.textContent = "Есть проблемы с частью сервисов";
+      summaryHint.textContent = "Один из компонентов не отвечает. Мы уже проверяем.";
+    } else {
+      summaryTitle.textContent = "Сервисы недоступны";
+      summaryHint.textContent = "Не удалось связаться с API. Попробуйте обновить страницу через минуту.";
+    }
+    meta.textContent = "Последняя проверка: " + new Date().toLocaleTimeString("ru-RU") + " · обновляется каждые 30 секунд";
+    setPill("web", "ok", "Работает");
+    setLatency("web", null);
+  }
+
+  run();
+  setInterval(run, 30000);
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") run();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "clauden-desktop",
+  "productName": "Clauden",
+  "version": "0.2.9",
+  "description": "Clauden for desktop: local Claude bridge + Clauden gateway",
+  "main": "src/main/main.js",
+  "type": "commonjs",
+  "author": "Clauden",
+  "homepage": "https://clauden.best",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "electron-updater": "^6.8.11"
+  }
+}

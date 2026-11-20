@@ -1,0 +1,312 @@
+{
+  "handle" : "188.40.190.88 - 188.40.190.95",
+  "startAddress" : "188.40.190.88",
+  "endAddress" : "188.40.190.95",
+  "ipVersion" : "v4",
+  "name" : "HOS-1300179",
+  "type" : "ASSIGNED PA",
+  "country" : "DE",
+  "parentHandle" : "188.40.0.0 - 188.40.255.255",
+  "cidr0_cidrs" : [ {
+    "v4prefix" : "188.40.190.88",
+    "length" : 29
+  } ],
+  "status" : [ "active" ],
+  "entities" : [ {
+    "handle" : "DS26046-RIPE",
+    "vcardArray" : [ "vcard", [ [ "version", { }, "text", "4.0" ], [ "fn", { }, "text", "DEDIK SERVERS" ], [ "kind", { }, "text", "individual" ] ] ],
+    "roles" : [ "administrative", "technical" ],
+    "links" : [ {
+      "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+      "rel" : "self",
+      "href" : "https://rdap.db.ripe.net/entity/DS26046-RIPE"
+    }, {
+      "value" : "http://www.ripe.net/data-tools/support/documentation/terms",
+      "rel" : "copyright",
+      "href" : "http://www.ripe.net/data-tools/support/documentation/terms"
+    } ],
+    "objectClassName" : "entity"
+  }, {
+    "handle" : "HOS-GUN",
+    "vcardArray" : [ "vcard", [ [ "version", { }, "text", "4.0" ], [ "fn", { }, "text", "HOS-GUN" ], [ "kind", { }, "text", "individual" ] ] ],
+    "roles" : [ "registrant" ],
+    "links" : [ {
+      "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+      "rel" : "self",
+      "href" : "https://rdap.db.ripe.net/entity/HOS-GUN"
+    }, {
+      "value" : "http://www.ripe.net/data-tools/support/documentation/terms",
+      "rel" : "copyright",
+      "href" : "http://www.ripe.net/data-tools/support/documentation/terms"
+    } ],
+    "objectClassName" : "entity"
+  }, {
+    "handle" : "HOAC1-RIPE",
+    "vcardArray" : [ "vcard", [ [ "version", { }, "text", "4.0" ], [ "fn", { }, "text", "Hetzner Online GmbH - Contact Role" ], [ "kind", { }, "text", "group" ], [ "email", {
+      "type" : "abuse"
+    }, "text", "abuse@hetzner.com" ], [ "org", { }, "text", "ORG-HOA1-RIPE" ] ] ],
+    "roles" : [ "abuse" ],
+    "entities" : [ {
+      "handle" : "DD15478-RIPE",
+      "vcardArray" : [ "vcard", [ [ "version", { }, "text", "4.0" ], [ "fn", { }, "text", "Dennis Diehm" ], [ "kind", { }, "text", "individual" ] ] ],
+      "roles" : [ "technical" ],
+      "links" : [ {
+        "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+        "rel" : "self",
+        "href" : "https://rdap.db.ripe.net/entity/DD15478-RIPE"
+      }, {
+        "value" : "http://www.ripe.net/data-tools/support/documentation/terms",
+        "rel" : "copyright",
+        "href" : "http://www.ripe.net/data-tools/support/documentation/terms"
+      } ],
+      "objectClassName" : "entity"
+    }, {
+      "handle" : "GM834-RIPE",
+      "vcardArray" : [ "vcard", [ [ "version", { }, "text", "4.0" ], [ "fn", { }, "text", "Guenther Mueller" ], [ "kind", { }, "text", "individual" ] ] ],
+      "roles" : [ "technical" ],
+      "links" : [ {
+        "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+        "rel" : "self",
+        "href" : "https://rdap.db.ripe.net/entity/GM834-RIPE"
+      }, {
+        "value" : "http://www.ripe.net/data-tools/support/documentation/terms",
+        "rel" : "copyright",
+        "href" : "http://www.ripe.net/data-tools/support/documentation/terms"
+      } ],
+      "objectClassName" : "entity"
+    }, {
+      "handle" : "HOS-GUN",
+      "vcardArray" : [ "vcard", [ [ "version", { }, "text", "4.0" ], [ "fn", { }, "text", "HOS-GUN" ], [ "kind", { }, "text", "individual" ] ] ],
+      "roles" : [ "registrant" ],
+      "links" : [ {
+        "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+        "rel" : "self",
+        "href" : "https://rdap.db.ripe.net/entity/HOS-GUN"
+      }, {
+        "value" : "http://www.ripe.net/data-tools/support/documentation/terms",
+        "rel" : "copyright",
+        "href" : "http://www.ripe.net/data-tools/support/documentation/terms"
+      } ],
+      "objectClassName" : "entity"
+    }, {
+      "handle" : "MF1400-RIPE",
+      "vcardArray" : [ "vcard", [ [ "version", { }, "text", "4.0" ], [ "fn", { }, "text", "Martin Fritzsche" ], [ "kind", { }, "text", "individual" ] ] ],
+      "roles" : [ "technical" ],
+      "links" : [ {
+        "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+        "rel" : "self",
+        "href" : "https://rdap.db.ripe.net/entity/MF1400-RIPE"
+      }, {
+        "value" : "http://www.ripe.net/data-tools/support/documentation/terms",
+        "rel" : "copyright",
+        "href" : "http://www.ripe.net/data-tools/support/documentation/terms"
+      } ],
+      "objectClassName" : "entity"
+    }, {
+      "handle" : "MH375-RIPE",
+      "vcardArray" : [ "vcard", [ [ "version", { }, "text", "4.0" ], [ "fn", { }, "text", "Martin Hetzner" ], [ "kind", { }, "text", "individual" ] ] ],
+      "roles" : [ "administrative" ],
+      "links" : [ {
+        "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+        "rel" : "self",
+        "href" : "https://rdap.db.ripe.net/entity/MH375-RIPE"
+      }, {
+        "value" : "http://www.ripe.net/data-tools/support/documentation/terms",
+        "rel" : "copyright",
+        "href" : "http://www.ripe.net/data-tools/support/documentation/terms"
+      } ],
+      "objectClassName" : "entity"
+    }, {
+      "handle" : "ORG-HOA1-RIPE",
+      "vcardArray" : [ "vcard", [ [ "version", { }, "text", "4.0" ], [ "fn", { }, "text", "Hetzner Online GmbH" ], [ "kind", { }, "text", "org" ], [ "adr", {
+        "label" : "Industriestrasse 25\nD-91710\nGunzenhausen\nGERMANY"
+      }, "text", [ "", "", "", "", "", "", "" ] ], [ "tel", {
+        "type" : "voice"
+      }, "text", "+49 9831 5050" ], [ "tel", {
+        "type" : "fax"
+      }, "text", "+49 9831 5053" ] ] ],
+      "roles" : [ "registrant" ],
+      "links" : [ {
+        "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+        "rel" : "self",
+        "href" : "https://rdap.db.ripe.net/entity/ORG-HOA1-RIPE"
+      }, {
+        "value" : "http://www.ripe.net/data-tools/support/documentation/terms",
+        "rel" : "copyright",
+        "href" : "http://www.ripe.net/data-tools/support/documentation/terms"
+      } ],
+      "objectClassName" : "entity"
+    }, {
+      "handle" : "SK8441-RIPE",
+      "vcardArray" : [ "vcard", [ [ "version", { }, "text", "4.0" ], [ "fn", { }, "text", "Sebastian Krannich" ], [ "kind", { }, "text", "individual" ] ] ],
+      "roles" : [ "technical" ],
+      "links" : [ {
+        "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+        "rel" : "self",
+        "href" : "https://rdap.db.ripe.net/entity/SK8441-RIPE"
+      }, {
+        "value" : "http://www.ripe.net/data-tools/support/documentation/terms",
+        "rel" : "copyright",
+        "href" : "http://www.ripe.net/data-tools/support/documentation/terms"
+      } ],
+      "objectClassName" : "entity"
+    }, {
+      "handle" : "TA9901-RIPE",
+      "vcardArray" : [ "vcard", [ [ "version", { }, "text", "4.0" ], [ "fn", { }, "text", "Tobias Albert" ], [ "kind", { }, "text", "individual" ] ] ],
+      "roles" : [ "technical" ],
+      "links" : [ {
+        "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+        "rel" : "self",
+        "href" : "https://rdap.db.ripe.net/entity/TA9901-RIPE"
+      }, {
+        "value" : "http://www.ripe.net/data-tools/support/documentation/terms",
+        "rel" : "copyright",
+        "href" : "http://www.ripe.net/data-tools/support/documentation/terms"
+      } ],
+      "objectClassName" : "entity"
+    } ],
+    "objectClassName" : "entity"
+  } ],
+  "remarks" : [ {
+    "description" : [ "HOS-1300179" ]
+  } ],
+  "links" : [ {
+    "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+    "rel" : "rdap-up",
+    "href" : "https://rdap.db.ripe.net/ips/rirSearch1/rdap-up/188.40.190.88%20-%20188.40.190.95",
+    "type" : "application/rdap+json"
+  }, {
+    "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+    "rel" : "rdap-up rdap-active",
+    "href" : "https://rdap.db.ripe.net/ips/rirSearch1/rdap-up/188.40.190.88%20-%20188.40.190.95?status=active",
+    "type" : "application/rdap+json"
+  }, {
+    "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+    "rel" : "rdap-down",
+    "href" : "https://rdap.db.ripe.net/ips/rirSearch1/rdap-down/188.40.190.88%20-%20188.40.190.95",
+    "type" : "application/rdap+json"
+  }, {
+    "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+    "rel" : "rdap-top",
+    "href" : "https://rdap.db.ripe.net/ips/rirSearch1/rdap-top/188.40.190.88%20-%20188.40.190.95",
+    "type" : "application/rdap+json"
+  }, {
+    "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+    "rel" : "rdap-top rdap-active",
+    "href" : "https://rdap.db.ripe.net/ips/rirSearch1/rdap-top/188.40.190.88%20-%20188.40.190.95?status=active",
+    "type" : "application/rdap+json"
+  }, {
+    "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+    "rel" : "rdap-bottom",
+    "href" : "https://rdap.db.ripe.net/ips/rirSearch1/rdap-bottom/188.40.190.88%20-%20188.40.190.95",
+    "type" : "application/rdap+json"
+  }, {
+    "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+    "rel" : "self",
+    "href" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+    "type" : "application/rdap+json"
+  }, {
+    "value" : "http://www.ripe.net/data-tools/support/documentation/terms",
+    "rel" : "copyright",
+    "href" : "http://www.ripe.net/data-tools/support/documentation/terms"
+  } ],
+  "events" : [ {
+    "eventAction" : "registration",
+    "eventDate" : "2026-01-10T02:30:12Z"
+  }, {
+    "eventAction" : "last changed",
+    "eventDate" : "2026-01-10T02:30:12Z"
+  } ],
+  "rdapConformance" : [ "geofeed1", "rirSearch1", "ips", "cidr0", "rdap_level_0", "nro_rdap_profile_0", "redacted" ],
+  "notices" : [ {
+    "title" : "Filtered",
+    "description" : [ "This output has been filtered." ]
+  }, {
+    "title" : "Whois Inaccuracy Reporting",
+    "description" : [ "If you see inaccuracies in the results, please visit:" ],
+    "links" : [ {
+      "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+      "rel" : "inaccuracy-report",
+      "href" : "https://www.ripe.net/contact-form?topic=ripe_dbm&show_form=true",
+      "type" : "text/html"
+    } ]
+  }, {
+    "title" : "Source",
+    "description" : [ "Objects returned came from source", "RIPE" ]
+  }, {
+    "title" : "Terms and Conditions",
+    "description" : [ "This is the RIPE Database query service. The objects are in RDAP format." ],
+    "links" : [ {
+      "value" : "https://rdap.db.ripe.net/ip/188.40.190.90",
+      "rel" : "terms-of-service",
+      "href" : "http://www.ripe.net/db/support/db-terms-conditions.pdf",
+      "type" : "application/pdf"
+    } ]
+  } ],
+  "port43" : "whois.ripe.net",
+  "objectClassName" : "ip network",
+  "redacted" : [ {
+    "name" : {
+      "description" : "Personal e-mail information"
+    },
+    "reason" : {
+      "description" : "Personal data"
+    },
+    "prePath" : "$.entities[?(@.handle=='DS26046-RIPE')].vcardArray[1][?(@[0]=='e-mail')]",
+    "method" : "removal"
+  }, {
+    "name" : {
+      "description" : "Personal address information"
+    },
+    "reason" : {
+      "description" : "Personal data"
+    },
+    "prePath" : "$.entities[?(@.handle=='DS26046-RIPE')].vcardArray[1][?(@[0]=='address')]",
+    "method" : "removal"
+  }, {
+    "name" : {
+      "description" : "Personal phone information"
+    },
+    "reason" : {
+      "description" : "Personal data"
+    },
+    "prePath" : "$.entities[?(@.handle=='DS26046-RIPE')].vcardArray[1][?(@[0]=='phone')]",
+    "method" : "removal"
+  }, {
+    "name" : {
+      "description" : "Personal e-mail information"
+    },
+    "reason" : {
+      "description" : "Personal data"
+    },
+    "prePath" : "$.entities[?(@.handle=='HOAC1-RIPE')].vcardArray[1][?(@[0]=='e-mail')]",
+    "method" : "removal"
+  }, {
+    "name" : {
+      "description" : "Personal fax-no information"
+    },
+    "reason" : {
+      "description" : "Personal data"
+    },
+    "prePath" : "$.entities[?(@.handle=='HOAC1-RIPE')].vcardArray[1][?(@[0]=='fax-no')]",
+    "method" : "removal"
+  }, {
+    "name" : {
+      "description" : "Personal phone information"
+    },
+    "reason" : {
+      "description" : "Personal data"
+    },
+    "prePath" : "$.entities[?(@.handle=='HOAC1-RIPE')].vcardArray[1][?(@[0]=='phone')]",
+    "method" : "removal"
+  }, {
+    "name" : {
+      "description" : "Personal address information"
+    },
+    "reason" : {
+      "description" : "Personal data"
+    },
+    "prePath" : "$.entities[?(@.handle=='HOAC1-RIPE')].vcardArray[1][?(@[0]=='address')]",
+    "method" : "removal"
+  } ]
+}

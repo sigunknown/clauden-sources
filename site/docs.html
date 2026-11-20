@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#191919">
+  <meta name="robots" content="index,follow">
+  <title>API Clauden — документация</title>
+  <meta name="description" content="Документация API Clauden: ключи, Anthropic- и OpenAI-совместимые эндпоинты, подключение к OpenCode, Claude Code, Codex и Cursor.">
+  <link rel="canonical" href="https://clauden.best/docs">
+  <link rel="icon" href="/icons/favicon-32.png?v=9" sizes="32x32">
+  <link rel="stylesheet" href="/css/legal.css">
+  <link rel="stylesheet" href="/css/docs.css">
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap docs-head-wrap site-head-row">
+    <a class="brand" href="/"><img src="/assets/logo.svg?v=9" alt="">Clauden</a>
+    <nav class="head-nav" aria-label="Разделы сайта">
+      <a href="/docs" aria-current="page">API</a>
+      <a href="/pricing">Тарифы</a>
+      <a href="/offer">Оферта</a>
+      <a href="/privacy">Приватность</a>
+      <a href="/status">Статус</a>
+      <a href="https://t.me/GwardenSup" target="_blank" rel="noopener">Поддержка</a>
+      <a class="head-cta" href="/chat">Открыть Clauden</a>
+    </nav>
+  </div>
+</header>
+
+<main class="docs-main">
+  <div class="wrap docs-wrap">
+    <a class="back-link" href="/">← На главную</a>
+    <div class="doc-head">
+      <span class="doc-kicker">Clauden API</span>
+      <h1>API Clauden</h1>
+      <p class="doc-meta">Редакция от 15 ноября 2026 г.</p>
+      <p class="doc-lead">Один шлюз для Anthropic- и OpenAI-совместимых клиентов: Claude Code, OpenCode, Codex, Cursor, SDK и обычный <code>curl</code>. Ключ берётся в Clauden и работает с вашим тарифом.</p>
+    </div>
+
+    <div class="docs-layout">
+      <aside class="docs-nav" aria-label="Содержание">
+        <div class="docs-nav-title">Содержание</div>
+        <a href="#start">Быстрый старт</a>
+        <a href="#key">Ключ и авторизация</a>
+        <a href="#install">Установка приложений</a>
+        <a href="#opencode">OpenCode</a>
+        <a href="#claude-code">Claude Code</a>
+        <a href="#codex">Codex</a>
+        <a href="#cursor">Cursor</a>
+        <a href="#requests">Примеры запросов</a>
+        <a href="#models">Модели</a>
+        <a href="#endpoints">Эндпоинты</a>
+        <a href="#errors">Ошибки и лимиты</a>
+        <a href="#security">Безопасность</a>
+        <a href="#faq">Вопросы</a>
+      </aside>
+
+      <article class="docs-article">
+        <section id="start">
+          <h2>Быстрый старт</h2>
+          <ol class="docs-steps">
+            <li>
+              <strong>Получите ключ.</strong> Откройте Clauden → <em>Настройки → API-ключ</em> и нажмите «Получить ключ». Ключ показывается один раз. Он доступен на тарифах Pro, Max и Ultra.
+            </li>
+            <li>
+              <strong>Сохраните его в переменную окружения.</strong> Не вставляйте ключ в исходники и не публикуйте его.
+              <div class="code-block">
+                <div class="code-head"><span>Linux / macOS</span><button class="code-copy" type="button">Копировать</button></div>
+                <pre><code>export CLAUDEN_API_KEY="sk-cld-ushw-..."</code></pre>
+              </div>
+              <div class="code-block">
+                <div class="code-head"><span>Windows PowerShell</span><button class="code-copy" type="button">Копировать</button></div>
+                <pre><code>setx CLAUDEN_API_KEY "sk-cld-ushw-..."</code></pre>
+              </div>
+              <p class="docs-hint">После <code>setx</code> закройте и откройте терминал заново — старая сессия переменную не увидит.</p>
+            </li>
+            <li>
+              <strong>Проверьте подключение.</strong> Запрос списка моделей должен вернуть JSON с массивом <code>data</code>.
+              <div class="code-block">
+                <div class="code-head"><span>Проверка ключа</span><button class="code-copy" type="button">Копировать</button></div>
+                <pre><code>curl -s https://clauden.best/v1/models \
+  -H "x-api-key: $CLAUDEN_API_KEY"</code></pre>
+              </div>
+            </li>
+          </ol>
+
+          <div class="note">
+            <strong>Базовый адрес зависит от клиента.</strong> Claude Code и Anthropic SDK используют <code>https://clauden.best</code> — они сами добавляют <code>/v1/messages</code>. OpenCode, OpenAI SDK, Codex и Cursor используют <code>https://clauden.best/v1</code> — они добавляют только <code>/messages</code>, <code>/chat/completions</code> или <code>/responses</code>.
+          </div>
+        </section>
+
+        <section id="key">
+          <h2>Ключ и авторизация</h2>
+          <p>Ключи Clauden начинаются с <code>sk-cld-ushw-</code>. Ключ привязан к вашему аккаунту и тарифу: запросы расходуют лимиты тарифа, а после понижения тарифа ключ получает новые ограничения.</p>
+
+          <h3>Заголовки</h3>
+          <p>Поддерживаются оба варианта — достаточно одного:</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Заголовок</th><th>Формат</th><th>Где используется</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>x-api-key</code></td><td><code>sk-cld-ushw-…</code></td><td>Anthropic SDK, Claude Code, Anthropic-совместимые клиенты</td></tr>
+                <tr><td><code>Authorization</code></td><td><code>Bearer sk-cld-ushw-…</code></td><td>OpenAI SDK, Codex, OpenCode, большинство OpenAI-совместимых клиентов</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Выпуск и отзыв</h3>
+          <ul>
+            <li>Ключ выпускается в веб-интерфейсе или приложении: <em>Настройки → API-ключ</em>.</li>
+            <li>Полный ключ показывается один раз. Дальше в списке видна только маска вида <code>sk-cld-ushw-AbCd…wxyz</code>.</li>
+            <li>Отозвать ключ можно там же. После отзыва запросы с ним получают <code>401</code>.</li>
+            <li>Количество одновременных ключей зависит от тарифа: Pro — 3, Max — 5, Ultra — 8. Кнопка «Сбросить ключ» выпускает новый и отзывает старые.</li>
+          </ul>
+
+          <div class="note warn">
+            <strong>Ключ — это пароль от вашего лимита.</strong> Не передавайте его третьим лицам и не используйте в браузерном JavaScript. Если ключ попал в лог, скриншот или репозиторий — отзовите его и выпустите новый.
+          </div>
+        </section>
+
+        <section id="install">
+          <h2>Установка приложений</h2>
+          <p>Веб-версия открывается сразу в браузере. Приложения для Windows, macOS, Linux и Android, а также Clauden Code ставятся отдельно и используют тот же аккаунт Clauden.</p>
+
+          <h3>Windows</h3>
+          <ol class="docs-steps">
+            <li>Скачайте установщик <a href="/downloads/Clauden-latest.exe" download>Clauden-latest.exe</a>.</li>
+            <li>Запустите его и подтвердите установку. Windows SmartScreen может предупредить, потому что подпись кода не настроена — выберите «Подробнее» → «Выполнить в любом случае».</li>
+            <li>Откройте Clauden и войдите в тот же аккаунт. Обновления приложение скачивает и ставит само.</li>
+          </ol>
+
+          <h3>macOS</h3>
+          <p>Нужна macOS 13 Ventura или новее. Откройте меню Apple → «Об этом Mac» и посмотрите процессор. Для Apple Silicon (M1–M4) скачайте <a href="/downloads/Clauden-latest-mac-arm64.zip?v=0.2.10" download>Clauden-latest-mac-arm64.zip</a>, для Intel — <a href="/downloads/Clauden-latest-mac-x64.zip?v=0.2.10" download>Clauden-latest-mac-x64.zip</a>.</p>
+          <ol class="docs-steps">
+            <li>Распакуйте архив и перетащите <code>Clauden.app</code> в папку «Программы».</li>
+            <li>Запустите Clauden. macOS предупредит, что приложение скачано из интернета и не подписано Apple.</li>
+            <li>Откройте «Системные настройки» → «Конфиденциальность и безопасность», прокрутите вниз и нажмите «Открыть всё равно» для Clauden. На старых версиях macOS можно нажать на приложение правой кнопкой → «Открыть».</li>
+            <li>Войдите в аккаунт Clauden — чаты, проекты и подписка будут те же.</li>
+          </ol>
+          <div class="note warn"><strong>Подпись Apple пока не настроена.</strong> Поэтому первый запуск требует подтверждения. Если macOS пишет, что приложение повреждено, выполните в Терминале <code>xattr -dr com.apple.quarantine /Applications/Clauden.app</code> и запустите снова.</div>
+          <p class="docs-hint">Обновления macOS-сборки пока ставятся вручную: скачайте новый архив и замените приложение в «Программах». Настройки и чаты сохранятся.</p>
+
+          <h3>Android</h3>
+          <ol class="docs-steps">
+            <li>Скачайте <a href="/app/latest.apk" download>APK-файл</a>.</li>
+            <li>Разрешите установку из браузера или файлового менеджера, если Android попросит.</li>
+            <li>Войдите в аккаунт Clauden — чаты, проекты и подписка будут те же.</li>
+          </ol>
+          <p class="docs-hint">Если установка не получается, напишите в <a href="https://t.me/ClaudenApp" target="_blank" rel="noopener">Telegram-канал</a> или в поддержку <a href="https://t.me/GwardenSup" target="_blank" rel="noopener">@GwardenSup</a>.</p>
+
+          <h3>Linux</h3>
+          <p>Для большинства дистрибутивов подойдёт AppImage — один файл, который не требует установки. Скачайте <a href="/downloads/Clauden-latest.AppImage" download>Clauden-latest.AppImage</a>:</p>
+          <div class="code-block">
+            <div class="code-head"><span>AppImage</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>chmod +x Clauden-latest.AppImage
+./Clauden-latest.AppImage</code></pre>
+          </div>
+          <p class="docs-hint">Если в системе нет libfuse2, запустите с флагом <code>--appimage-extract-and-run</code>.</p>
+          <p>Для Debian/Ubuntu есть пакет <code>.deb</code> — <a href="/downloads/Clauden-latest.deb" download>Clauden-latest.deb</a>:</p>
+          <div class="code-block">
+            <div class="code-head"><span>DEB</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>sudo apt install ./Clauden-latest.deb</code></pre>
+          </div>
+          <p>Портативная версия без установки — <a href="/downloads/Clauden-latest-linux.tar.gz" download>Clauden-latest-linux.tar.gz</a>.</p>
+
+          <h3>Clauden Code: приложение для Windows</h3>
+          <p><a href="/downloads/code/ClaudenCode-latest-x64.exe" download>Установщик Clauden Code</a> — дерево файлов, редактор с подсветкой, диффы с коммитом, чат агента и локальный терминал в одном окне. Сессия открывается прямо на этом компьютере: агент правит файлы на диске.</p>
+
+          <h3>Clauden Code: терминал</h3>
+          <p>Для CLI нужен Node.js 18+. Скачайте <a href="/downloads/code/clauden-code-0.1.1.tgz" download>clauden-code-0.1.1.tgz</a> и установите его:</p>
+          <div class="code-block">
+            <div class="code-head"><span>npm</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>npm install -g ./clauden-code-0.1.1.tgz
+clauden login</code></pre>
+          </div>
+          <p>Или без npm, через <a href="/downloads/code/install.sh">install.sh</a>. Команда <code>/remote-control</code> внутри сессии отдаёт живую сессию по ссылке.</p>
+        </section>
+
+        <section id="opencode">
+          <h2>OpenCode</h2>
+          <p>OpenCode подключается к Clauden как Anthropic-совместимый провайдер. Модели, инструменты и потоковые ответы работают через <code>/v1/messages</code>.</p>
+
+          <div class="docs-callout">
+            <span class="docs-pill">Нужно</span>
+            <span>OpenCode 2.x и активный тариф Clauden (Pro, Max или Ultra). Если у вас 1.x, выполните <code>opencode upgrade</code>.</span>
+          </div>
+
+          <h3>1. Установите и проверьте OpenCode</h3>
+          <div class="code-block">
+            <div class="code-head"><span>Установка</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>curl -fsSL https://opencode.ai/install | bash
+opencode --version</code></pre>
+          </div>
+          <p class="docs-hint">Другие способы установки — в документации OpenCode: <a href="https://opencode.ai/docs" target="_blank" rel="noopener">opencode.ai/docs</a>.</p>
+
+          <h3>2. Задайте ключ Clauden</h3>
+          <p>OpenCode читает ключ из переменной окружения. Добавьте её в профиль shell или задайте в текущей сессии:</p>
+          <div class="code-block">
+            <div class="code-head"><span>Linux / macOS</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>echo 'export CLAUDEN_API_KEY="sk-cld-ushw-..."' >> ~/.bashrc
+source ~/.bashrc</code></pre>
+          </div>
+          <div class="code-block">
+            <div class="code-head"><span>Windows PowerShell</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>setx CLAUDEN_API_KEY "sk-cld-ushw-..."</code></pre>
+          </div>
+
+          <h3>3. Добавьте провайдера в конфиг</h3>
+          <p>Откройте глобальный конфиг OpenCode:</p>
+          <ul>
+            <li>Linux / macOS: <code>~/.config/opencode/opencode.jsonc</code></li>
+            <li>Windows: <code>%USERPROFILE%\.config\opencode\opencode.jsonc</code></li>
+          </ul>
+          <p>Добавьте провайдера <code>clauden</code> и выберите модель по умолчанию:</p>
+          <div class="code-block">
+            <div class="code-head"><span>opencode.jsonc</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "clauden/claude-sonnet-5-5",
+  "providers": {
+    "clauden": {
+      "name": "Clauden",
+      "env": ["CLAUDEN_API_KEY"],
+      "package": "@opencode/ai/providers/anthropic-compatible",
+      "settings": {
+        "baseURL": "https://clauden.best/v1"
+      },
+      "models": {
+        "claude-fable-5-2": { "name": "Claude Fable 5.2" },
+        "claude-opus-5-5": { "name": "Claude Opus 5.5" },
+        "claude-sonnet-5-5": { "name": "Claude Sonnet 5.5" },
+        "claude-haiku-5-5": { "name": "Claude Haiku 5.5" }
+      }
+    }
+  }
+}</code></pre>
+          </div>
+
+          <div class="note">
+            <strong>Обратите внимание на <code>baseURL</code>.</strong> OpenCode добавляет к адресу только <code>/messages</code> или <code>/chat/completions</code>, поэтому в конфиге указывается <code>https://clauden.best/v1</code>. В Claude Code и Anthropic SDK — наоборот, <code>https://clauden.best</code> без <code>/v1</code>, потому что они добавляют <code>/v1/messages</code> сами.
+          </div>
+
+          <h3>4. Проверьте модели и запустите</h3>
+          <div class="code-block">
+            <div class="code-head"><span>Проверка</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>opencode models | grep clauden
+opencode run -m clauden/claude-sonnet-5-5 "Напиши функцию на Python для чтения CSV"</code></pre>
+          </div>
+          <p>В интерактивном интерфейсе нажмите <code>/models</code> и выберите модель из провайдера <strong>Clauden</strong>. Конфиг перечитывается автоматически — перезапускать OpenCode не нужно.</p>
+
+          <details class="docs-details">
+            <summary>Вариант с OpenAI-совместимым провайдером</summary>
+            <p>Если клиент или плагин требует OpenAI Chat Completions, используйте тот же ключ и другой пакет:</p>
+            <div class="code-block">
+              <div class="code-head"><span>opencode.jsonc</span><button class="code-copy" type="button">Копировать</button></div>
+              <pre><code>{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "clauden/claude-sonnet-5-5",
+  "providers": {
+    "clauden": {
+      "name": "Clauden",
+      "env": ["CLAUDEN_API_KEY"],
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "https://clauden.best/v1"
+      },
+      "models": {
+        "claude-sonnet-5-5": { "name": "Claude Sonnet 5.5" },
+        "claude-opus-5-5": { "name": "Claude Opus 5.5" }
+      }
+    }
+  }
+}</code></pre>
+            </div>
+            <p class="docs-hint">Для OpenAI-совместимого пакета <code>baseURL</code> всегда содержит <code>/v1</code>.</p>
+          </details>
+
+          <h3>Если OpenCode не видит провайдера</h3>
+          <ul>
+            <li>Проверьте, что ключ виден процессу: <code>echo $CLAUDEN_API_KEY</code> (Linux/macOS) или <code>$env:CLAUDEN_API_KEY</code> (PowerShell).</li>
+            <li>Проверьте синтаксис JSONC: лишняя запятая ломает весь конфиг.</li>
+            <li>Запустите <code>opencode models</code> — в списке должны быть модели <code>clauden/…</code>.</li>
+            <li>Если модели видны, но запрос возвращает <code>401</code>, добавьте в <code>settings</code> провайдера строку <code>"apiKey": "{env:CLAUDEN_API_KEY}"</code>.</li>
+            <li>Проверьте ключ отдельно через <code>curl</code> из раздела <a href="#requests">Примеры запросов</a>.</li>
+          </ul>
+        </section>
+
+        <section id="claude-code">
+          <h2>Claude Code</h2>
+          <p>Claude Code — терминальный клиент Anthropic. Clauden подключается к нему как Anthropic-совместимый API. Нужны Node.js 18+, установленный Claude Code и ключ Clauden.</p>
+
+          <h3>1. Установите Claude Code</h3>
+          <div class="code-block">
+            <div class="code-head"><span>npm</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>npm install -g @anthropic-ai/claude-code
+claude --version</code></pre>
+          </div>
+          <p class="docs-hint">Если Claude Code уже установлен, обновите его: <code>npm update -g @anthropic-ai/claude-code</code>.</p>
+
+          <h3>2. Получите ключ Clauden</h3>
+          <p>Откройте <em>Настройки → API-ключ</em> и нажмите «Получить ключ». Он показывается один раз и начинается с <code>sk-cld-ushw-</code>. Ключ работает на тарифах Pro, Max и Ultra.</p>
+
+          <h3>3. Задайте адрес и токен</h3>
+          <p>Для Claude Code базовый адрес указывается <strong>без</strong> <code>/v1</code> — клиент сам добавляет <code>/v1/messages</code>.</p>
+          <div class="code-block">
+            <div class="code-head"><span>Linux / macOS — на эту сессию</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>export ANTHROPIC_BASE_URL="https://clauden.best"
+export ANTHROPIC_AUTH_TOKEN="sk-cld-ushw-..."
+claude</code></pre>
+          </div>
+          <p>Чтобы не вводить каждый раз, добавьте эти строки в <code>~/.zshrc</code> (macOS) или <code>~/.bashrc</code> (Linux) и выполните <code>source ~/.zshrc</code> или <code>source ~/.bashrc</code>.</p>
+          <div class="code-block">
+            <div class="code-head"><span>Windows PowerShell</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>$env:ANTHROPIC_BASE_URL = "https://clauden.best"
+$env:ANTHROPIC_AUTH_TOKEN = "sk-cld-ushw-..."
+claude</code></pre>
+          </div>
+          <p class="docs-hint">Для постоянных переменных в Windows используйте <code>setx ANTHROPIC_BASE_URL "https://clauden.best"</code> и <code>setx ANTHROPIC_AUTH_TOKEN "sk-cld-ushw-..."</code>, затем закройте и откройте терминал заново.</p>
+          <p class="docs-hint">Используйте <code>ANTHROPIC_AUTH_TOKEN</code>, а не <code>ANTHROPIC_API_KEY</code>. Clauden принимает оба варианта, но токен не выглядит как официальный ключ Anthropic и реже конфликтует с уже сохранённым входом в Claude Code.</p>
+
+          <h3>4. Проверьте подключение</h3>
+          <div class="code-block">
+            <div class="code-head"><span>Проверка</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>claude --model claude-sonnet-5-5 "Ответь одним словом: работает"</code></pre>
+          </div>
+          <p>Внутри интерактивной сессии команда <code>/status</code> показывает выбранную модель и адрес API, а <code>/model</code> позволяет сменить модель.</p>
+
+          <h3>5. Постоянные настройки через settings.json</h3>
+          <p>Можно прописать адрес, токен и модель в файле настроек Claude Code. Путь: <code>~/.claude/settings.json</code> на macOS/Linux или <code>%USERPROFILE%\.claude\settings.json</code> на Windows.</p>
+          <div class="code-block">
+            <div class="code-head"><span>settings.json</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>{
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://clauden.best",
+    "ANTHROPIC_AUTH_TOKEN": "sk-cld-ushw-...",
+    "ANTHROPIC_MODEL": "claude-sonnet-5-5",
+    "CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK": "1"
+  }
+}</code></pre>
+          </div>
+          <p class="docs-hint">Если файл уже существует, добавьте поля внутрь существующего объекта <code>env</code>, а не заменяйте весь файл. На Windows пути в JSON записываются с двойными обратными слэшами.</p>
+
+          <h3>Если не работает</h3>
+          <ul>
+            <li><strong>401 Invalid API key</strong> — ключ скопирован не полностью, отозван или в переменной остались кавычки/пробелы. Выпустите новый ключ и проверьте <code>echo $ANTHROPIC_AUTH_TOKEN</code> (PowerShell: <code>$env:ANTHROPIC_AUTH_TOKEN</code>).</li>
+            <li><strong>403 subscription_required</strong> — нет активного тарифа Clauden или он истёк. Проверьте тариф в настройках аккаунта.</li>
+            <li><strong>404 model</strong> — имя модели не совпало. Запросите список через <code>GET /v1/models</code> и используйте точный ID, например <code>claude-sonnet-5-5</code>.</li>
+            <li><strong>Команда claude не найдена</strong> — npm установил пакет не в PATH. Проверьте <code>npm prefix -g</code> и добавьте каталог <code>bin</code> в PATH.</li>
+            <li><strong>Долгие ответы обрываются</strong> — оставьте <code>CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK=1</code>, как в примере выше.</li>
+          </ul>
+        </section>
+
+        <section id="codex">
+          <h2>Codex</h2>
+          <p>Codex ходит в OpenAI Responses API. Добавьте провайдера в <code>~/.codex/config.toml</code>:</p>
+          <div class="code-block">
+            <div class="code-head"><span>config.toml</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>model = "claude-sonnet-5-5"
+model_provider = "clauden"
+
+[model_providers.clauden]
+name = "Clauden"
+base_url = "https://clauden.best/v1"
+env_key = "CLAUDEN_API_KEY"
+wire_api = "responses"</code></pre>
+          </div>
+          <p>Ключ должен быть в переменной <code>CLAUDEN_API_KEY</code>. После изменения конфига перезапустите Codex.</p>
+        </section>
+
+        <section id="cursor">
+          <h2>Cursor</h2>
+          <p>Cursor подключается как OpenAI-совместимый провайдер:</p>
+          <ol>
+            <li>Откройте <em>Settings → Models → API Keys</em>.</li>
+            <li>Включите переопределение OpenAI Base URL и укажите <code>https://clauden.best/v1</code>.</li>
+            <li>В поле OpenAI API Key вставьте ключ <code>sk-cld-ushw-…</code>.</li>
+            <li>Добавьте модель вручную: <code>claude-sonnet-5-5</code> или <code>claude-opus-5-5</code>.</li>
+          </ol>
+          <p class="docs-hint">Названия пунктов меню могут отличаться между версиями Cursor. Главное — base URL с <code>/v1</code> и ключ Clauden.</p>
+        </section>
+
+        <section id="requests">
+          <h2>Примеры запросов</h2>
+
+          <h3>Anthropic Messages</h3>
+          <div class="code-block">
+            <div class="code-head"><span>curl</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>curl -s https://clauden.best/v1/messages \
+  -H "x-api-key: $CLAUDEN_API_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -H "content-type: application/json" \
+  -d '{
+    "model": "claude-sonnet-5-5",
+    "max_tokens": 256,
+    "messages": [
+      { "role": "user", "content": "Привет! Кто ты?" }
+    ]
+  }'</code></pre>
+          </div>
+          <p class="docs-hint">Поле <code>max_tokens</code> обязательно. Для потокового ответа добавьте <code>"stream": true</code>.</p>
+
+          <h3>OpenAI Chat Completions</h3>
+          <div class="code-block">
+            <div class="code-head"><span>curl</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>curl -s https://clauden.best/v1/chat/completions \
+  -H "Authorization: Bearer $CLAUDEN_API_KEY" \
+  -H "content-type: application/json" \
+  -d '{
+    "model": "claude-sonnet-5-5",
+    "messages": [
+      { "role": "user", "content": "Привет! Кто ты?" }
+    ]
+  }'</code></pre>
+          </div>
+
+          <h3>OpenAI Responses</h3>
+          <div class="code-block">
+            <div class="code-head"><span>curl</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>curl -s https://clauden.best/v1/responses \
+  -H "Authorization: Bearer $CLAUDEN_API_KEY" \
+  -H "content-type: application/json" \
+  -d '{
+    "model": "claude-sonnet-5-5",
+    "input": "Привет! Кто ты?"
+  }'</code></pre>
+          </div>
+
+          <h3>Python SDK</h3>
+          <div class="code-block">
+            <div class="code-head"><span>Anthropic SDK</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>from anthropic import Anthropic
+
+client = Anthropic(
+    api_key="sk-cld-ushw-...",
+    base_url="https://clauden.best",
+)
+
+message = client.messages.create(
+    model="claude-sonnet-5-5",
+    max_tokens=256,
+    messages=[{"role": "user", "content": "Привет!"}],
+)
+print(message.content[0].text)</code></pre>
+          </div>
+          <div class="code-block">
+            <div class="code-head"><span>OpenAI SDK</span><button class="code-copy" type="button">Копировать</button></div>
+            <pre><code>from openai import OpenAI
+
+client = OpenAI(
+    api_key="sk-cld-ushw-...",
+    base_url="https://clauden.best/v1",
+)
+
+response = client.chat.completions.create(
+    model="claude-sonnet-5-5",
+    messages=[{"role": "user", "content": "Привет!"}],
+)
+print(response.choices[0].message.content)</code></pre>
+          </div>
+        </section>
+
+        <section id="models">
+          <h2>Модели</h2>
+          <p>Актуальный список всегда доступен через <code>GET /v1/models</code>. Идентификаторы моделей чувствительны к регистру и дефисам: используйте ровно те значения, которые вернул сервер.</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>ID модели</th><th>Название</th><th>Доступ</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>claude-fable-5-2</code></td><td>Claude Fable 5.2</td><td>Max, Ultra</td></tr>
+                <tr><td><code>claude-opus-5-5</code></td><td>Claude Opus 5.5</td><td>Pro, Max, Ultra</td></tr>
+                <tr><td><code>claude-sonnet-5-5</code></td><td>Claude Sonnet 5.5</td><td>Pro, Max, Ultra</td></tr>
+                <tr><td><code>claude-haiku-5-5</code></td><td>Claude Haiku 5.5</td><td>Pro, Max, Ultra</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="docs-hint">В ответе также могут быть доступны модели предыдущих поколений: <code>claude-fable-5-1</code>, <code>claude-fable-5</code>, <code>claude-opus-5</code>, <code>claude-opus-4-8</code>, <code>claude-sonnet-5</code>. Для новых интеграций выбирайте модели из таблицы выше.</p>
+        </section>
+
+        <section id="endpoints">
+          <h2>Эндпоинты</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Метод</th><th>Путь</th><th>Формат</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>GET</td><td><code>/v1/models</code></td><td>Список моделей</td></tr>
+                <tr><td>POST</td><td><code>/v1/messages</code></td><td>Anthropic Messages, JSON или SSE</td></tr>
+                <tr><td>POST</td><td><code>/v1/messages/count_tokens</code></td><td>Подсчёт токенов Anthropic</td></tr>
+                <tr><td>POST</td><td><code>/v1/chat/completions</code></td><td>OpenAI Chat Completions, JSON или SSE</td></tr>
+                <tr><td>POST</td><td><code>/v1/responses</code></td><td>OpenAI Responses, JSON или SSE</td></tr>
+                <tr><td>GET</td><td><code>/v1/plans</code></td><td>Публичный список тарифов, без ключа</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Потоковые ответы</h3>
+          <p>Во всех трёх чат-эндпоинтах поддерживается <code>stream: true</code>:</p>
+          <ul>
+            <li><code>/v1/messages</code> отдаёт Anthropic SSE-события (<code>message_start</code>, <code>content_block_delta</code>, <code>message_stop</code>).</li>
+            <li><code>/v1/chat/completions</code> отдаёт OpenAI-чанки и завершается строкой <code>[DONE]</code>.</li>
+            <li><code>/v1/responses</code> отдаёт события Responses API.</li>
+          </ul>
+
+          <h3>Дополнительные поля Clauden</h3>
+          <p>Необязательные поля для интеграций, которым нужен контекст проекта или память:</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Поле</th><th>Что делает</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>clauden_project</code></td><td>Текст с инструкциями и знаниями проекта, добавляется в системный промпт.</td></tr>
+                <tr><td><code>clauden_context</code></td><td>Короткий контекст или заметки к запросу.</td></tr>
+                <tr><td><code>clauden_system</code></td><td>Дополнительный системный промпт.</td></tr>
+                <tr><td><code>clauden_memory</code></td><td><code>false</code> отключает автоматическую память аккаунта.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="errors">
+          <h2>Ошибки и лимиты</h2>
+          <p>Anthropic-эндпоинты возвращают ошибки в формате Anthropic, OpenAI-эндпоинты — в формате OpenAI.</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Код</th><th>Тип</th><th>Что значит</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>400</td><td><code>invalid_request_error</code></td><td>Нет обязательного поля, например <code>max_tokens</code>, или неверный JSON.</td></tr>
+                <tr><td>401</td><td><code>authentication_error</code></td><td>Ключ не передан, отозван или неверен.</td></tr>
+                <tr><td>403</td><td><code>permission_error</code> / <code>subscription_required</code></td><td>Нет активного тарифа или модель недоступна на вашем тарифе.</td></tr>
+                <tr><td>404</td><td><code>not_found_error</code></td><td>Неизвестная модель или путь. Проверьте ID через <code>/v1/models</code>.</td></tr>
+                <tr><td>429</td><td><code>rate_limit_error</code></td><td>Дневной или тарифный лимит исчерпан, либо слишком много одновременных запросов.</td></tr>
+                <tr><td>503</td><td><code>overloaded_error</code> / <code>server_error</code></td><td>Временная недоступность или техработы. Повторите позже.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>В ответе <code>429</code> может быть поле <code>resets_at</code> — время, когда лимит сбросится. Лимиты зависят от тарифа и общие с приложением Clauden: запросы через API расходуют тот же лимит, что и чаты в интерфейсе.</p>
+        </section>
+
+        <section id="security">
+          <h2>Безопасность</h2>
+          <ul>
+            <li>Храните ключ в переменной окружения или менеджере секретов, а не в коде и не в публичном репозитории.</li>
+            <li>Для каждого устройства или приложения используйте отдельный ключ — так проще отозвать доступ, не ломая остальные интеграции.</li>
+            <li>Не используйте ключ в браузерном JavaScript: любой посетитель страницы сможет его забрать.</li>
+            <li>Если ключ утёк, отзовите его в <em>Настройках → API-ключ</em> и выпустите новый. Старый сразу перестанет работать.</li>
+            <li>Clauden не просит пароль от Anthropic для API-доступа. Для ключа нужен только аккаунт и тариф Clauden.</li>
+          </ul>
+        </section>
+
+        <section id="faq">
+          <h2>Вопросы</h2>
+          <details class="docs-details" open>
+            <summary>Почему <code>401 Invalid API key</code>?</summary>
+            <p>Ключ не передан, скопирован не полностью или уже отозван. Проверьте заголовок <code>x-api-key</code> или <code>Authorization: Bearer …</code> и убедитесь, что в переменной нет кавычек и пробелов.</p>
+          </details>
+          <details class="docs-details">
+            <summary>Почему <code>404 model</code>?</summary>
+            <p>Имя модели не совпало с каталогом. Запросите <code>GET /v1/models</code> и используйте точный <code>id</code>, например <code>claude-sonnet-5-5</code>, а не <code>claude-sonnet-5.5</code>.</p>
+          </details>
+          <details class="docs-details">
+            <summary>Почему <code>403 subscription_required</code>?</summary>
+            <p>API-ключи и запросы через шлюз доступны на платных тарифах Clauden. Проверьте, что тариф активен и не истёк. Подписка Anthropic или тариф, выданный вручную, ключ не открывает.</p>
+          </details>
+          <details class="docs-details">
+            <summary>Можно ли использовать ключ в OpenAI SDK?</summary>
+            <p>Да. Укажите <code>base_url="https://clauden.best/v1"</code> и ключ Clauden. Работают <code>/v1/chat/completions</code> и <code>/v1/responses</code>.</p>
+          </details>
+          <details class="docs-details">
+            <summary>Где взять ключ, если я оплатил тариф?</summary>
+            <p>Войдите в Clauden под тем же аккаунтом, которым оплачивали тариф, и откройте <em>Настройки → API-ключ</em>. Если раздела нет или ключ не выпускается, напишите в поддержку.</p>
+          </details>
+        </section>
+
+        <div class="docs-footer-nav">
+          <a class="doc-card" href="/chat">
+            <span class="doc-card-title">Открыть Clauden</span>
+            <span class="doc-card-sub">Выпустить ключ в настройках аккаунта.</span>
+          </a>
+          <a class="doc-card" href="/pricing">
+            <span class="doc-card-title">Тарифы</span>
+            <span class="doc-card-sub">Лимиты и стоимость Pro, Max и Ultra.</span>
+          </a>
+          <a class="doc-card" href="https://t.me/GwardenSup" target="_blank" rel="noopener">
+            <span class="doc-card-title">Поддержка</span>
+            <span class="doc-card-sub">Telegram @GwardenSup. Почта — gwardensup@gmail.com.</span>
+          </a>
+        </div>
+
+        <p class="upd">Дата последнего обновления: 15 ноября 2026 г.</p>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap site-foot-row site-foot-requisites">
+    <div>
+      <strong>Самозанятый Зайцев Станислав Алексеевич</strong><br>
+      ИНН 362201956766 · г. Воронеж
+    </div>
+    <div>
+      <a href="mailto:gwardensup@gmail.com">gwardensup@gmail.com</a> ·
+      Telegram: <a href="https://t.me/GwardenSup" target="_blank" rel="noopener">@GwardenSup</a>
+    </div>
+  </div>
+  <div class="wrap site-foot-row">
+    <div>© 2026 Clauden. Claude — товарный знак Anthropic PBC; Clauden не связан с Anthropic.</div>
+    <div class="site-foot-links">
+      <a href="/docs">API</a>
+      <a href="/pricing">Тарифы</a>
+      <a href="/offer">Оферта</a>
+      <a href="/privacy">Приватность</a>
+      <a href="/status">Статус</a>
+      <a href="https://t.me/GwardenSup" target="_blank" rel="noopener">Поддержка</a>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  document.querySelectorAll(".code-copy").forEach(function (button) {
+    button.addEventListener("click", function () {
+      var block = button.closest(".code-block");
+      var code = block ? block.querySelector("code") : null;
+      if (!code) return;
+      var text = code.innerText;
+      var done = function () {
+        var old = button.textContent;
+        button.textContent = "Скопировано";
+        setTimeout(function () { button.textContent = old; }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(function () {});
+      } else {
+        var area = document.createElement("textarea");
+        area.value = text;
+        document.body.appendChild(area);
+        area.select();
+        try { document.execCommand("copy"); done(); } catch (e) {}
+        area.remove();
+      }
+    });
+  });
+</script>
+</body>
+</html>

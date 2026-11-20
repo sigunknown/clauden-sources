@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Clauden — нет связи</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: grid; place-items: center;
+      background: radial-gradient(900px 500px at 50% -10%, #2a211d, transparent 65%), #191919;
+      color: #f0ece4; font: 15px/1.5 -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    .card { width: min(420px, 92vw); text-align: center; padding: 36px 28px; }
+    .logo { width: 64px; height: 64px; margin-bottom: 18px; }
+    h1 { font-size: 22px; margin: 0 0 8px; font-weight: 600; }
+    p { margin: 0 0 22px; color: #b9b2a7; }
+    button {
+      appearance: none; border: 0; border-radius: 12px; padding: 12px 22px;
+      background: #d97757; color: #fff; font: inherit; font-weight: 600; cursor: pointer;
+    }
+    button:hover { background: #e08767; }
+    .hint { margin-top: 18px; font-size: 12px; color: #7f7a72; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <img class="logo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%23d97757'/><path d='M20 42V22h6l6 10 6-10h6v20h-5V30l-7 11-7-11v12z' fill='%23fff'/></svg>" alt="">
+    <h1>Нет связи с clauden.best</h1>
+    <p>Проверьте интернет или VPN. Приложение откроется снова, как только сайт станет доступен.</p>
+    <button id="retry">Повторить</button>
+    <div class="hint">Claude-режим тоже требует интернет: запросы идут напрямую в claude.ai.</div>
+  </main>
+  <script>
+    document.getElementById('retry').addEventListener('click', () => {
+      window.location.href = 'https://clauden.best';
+    });
+  </script>
+</body>
+</html>
