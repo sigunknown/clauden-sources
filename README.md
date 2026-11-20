@@ -17,6 +17,7 @@
 | `get-fonts.py` | Скачивает четыре шрифта `anthropic_*` с clauden.best в `site/fonts/` и сверяет их SHA-256 с `hashes.txt` | |
 | `server/latest.yml` | Манифест автообновления | `https://clauden.best/downloads/updates/latest.yml` |
 | `server/proxy-nodes.json` | Живой список бесплатных прокси, который сервер отдаёт программе. Учётные данные прокси (UUID и ключи) оставлены как есть: сервер отдаёт их любому без входа, а те же значения зашиты в `app/src/main/proxy.js` | `https://clauden.best/v1/proxy/nodes`, 20.11 |
+| `server/plans.json` | Тарифы Free, Pro, Max, Ultra с ценами. Сервер отдаёт их без входа | `https://clauden.best/v1/plans`, 20.11 |
 | `server/rdap-188.40.190.90.json` | Ответ реестра RIPE о владельце IP-адреса прокси | `https://rdap.db.ripe.net/ip/188.40.190.90` |
 | `hashes.txt` | SHA-256 всех файлов, а также `app.asar`, установщика и APK | |
 
@@ -87,6 +88,17 @@ python serve.py
 - `claude-client.js:250` — `httpError`: на 403 текст «смените VPN» (`:254`), на 429 ошибка с таймером (`:260`). Другой реакции на бан в коде нет.
 - Поиск форматов ключей (`sk-ant-`, `sk-`, `sk-or-`, `AIza`, `AKIA`, `ghp_`, JWT, приватные ключи) по `app/src/` и `site/` ничего не находит.
 - Обещания с сайта: в `site/js/app.bundle.unescaped.js` искать `резервный запас ключей` (4 места) и `выданный аккаунт Claude`.
+
+### Модели: названия настоящие, платный режим не проверить
+Все названия из списка (Fable 5.2 и 5.1, Opus 5.5, Sonnet 5.5, Haiku 5.5, Opus 4.7, Sonnet 4.6 и 4.5, Haiku 4.5) есть в официальном каталоге Anthropic (`platform.claude.com/docs/en/about-claude/models/overview`, проверено 20.11).
+- `claude-client.js:12` — в режиме «свой Claude» все запросы идут на `https://claude.ai` с аккаунта пользователя.
+- `claude-client.js:454`–`484` — список моделей берётся у claude.ai (`/model_settings`), к нему добавляется запасной список.
+- `claude-client.js:21`–`35` — запасной список. В нём `claude-3-opus-20240229` (`:34`), которую Anthropic отключил 5 января 2026, и `claude-haiku-4-5` без даты, которой нет в каталоге.
+- `claude-mock.js` — заглушка с фальшивыми ответами только для разработки: `main.js:431` включает её, если приложение не упаковано и передан флаг `--mock-claude`. В установленной программе её нет.
+- Платный режим: в `site/js/app.bundle.unescaped.js` искать `"/v1/chat/completions"`. Запрос уходит на clauden.best, программа передаёт только название модели и не проверяет, кто ответил.
+- Названия и подписи моделей на сайте: искать `var Oe=`.
+- `server/plans.json` — у тарифа Free подпись «Только Claude-аккаунт, без моделей Clauden». Цены: Pro $20, Max $100, Ultra $180 (`compareAt` 200).
+- `https://clauden.best/v1/models` без ключа отвечает 401, список моделей сервера снаружи не посмотреть.
 
 ### Прокси: пять «стран» на одном адресе
 - `proxy.js:26`–`32` — пять зашитых узлов, все `188.40.190.90`, порты 8413–8417.
